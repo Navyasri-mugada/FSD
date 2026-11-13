@@ -1,0 +1,273 @@
+Bash
+-------
+
+mkdir -p ~/andhra-food-hub
+cd ~/andhra-food-hub
+npm init -y
+npm install express mongoose cors
+touch index.html server.js
+
+  
+Step 2: Open and Add Code in VS Code
+Launch VS Code from Git Bash:
+
+Bash
+  -----
+code .
+
+  
+1. Paste the Website Code (index.html)
+Click on index.html in VS Code, paste this code, and press Ctrl + S to save:
+
+HTML
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andhra Food Hub - Real Flavours</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background-color: #fbf9f5; color: #1f2937; }
+    .top-bar { background: #14281d; color: #fff; padding: 10px 20px; text-align: center; font-size: 14px; }
+    .top-bar span { color: #facc15; font-weight: bold; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 40px; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 10; }
+    .logo { font-size: 22px; font-weight: 800; color: #14281d; }
+    .logo small { display: block; font-size: 10px; color: #b91c1c; letter-spacing: 1px; }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { text-decoration: none; color: #374151; font-weight: 600; }
+    .cart-btn { background: #14281d; color: #fff; border: none; padding: 10px 18px; border-radius: 25px; cursor: pointer; font-weight: bold; }
+    .hero { display: flex; justify-content: space-between; align-items: center; padding: 60px 40px; max-width: 1200px; margin: auto; gap: 40px; flex-wrap: wrap; }
+    .hero-text { flex: 1; min-width: 300px; }
+    .badge { background: #fee2e2; color: #b91c1c; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; display: inline-block; margin-bottom: 16px; }
+    .hero h1 { font-size: 46px; line-height: 1.15; color: #14281d; margin-bottom: 18px; }
+    .hero h1 span { color: #dc2626; }
+    .hero p { font-size: 17px; color: #4b5563; line-height: 1.6; margin-bottom: 26px; }
+    .btn-primary { background: #dc2626; color: #fff; padding: 14px 26px; border: none; border-radius: 30px; font-size: 16px; font-weight: bold; cursor: pointer; margin-right: 12px; }
+    .btn-outline { background: transparent; border: 2px solid #14281d; color: #14281d; padding: 12px 24px; border-radius: 30px; font-size: 16px; font-weight: bold; cursor: pointer; }
+    .special-card { background: #fff; padding: 28px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.07); width: 380px; }
+    .special-card h3 { margin-bottom: 16px; color: #14281d; }
+    .dish-mini { padding: 12px; border: 1px solid #f3f4f6; border-radius: 12px; margin-bottom: 12px; }
+    .section { max-width: 1200px; margin: 40px auto; padding: 0 40px; }
+    .section h2 { font-size: 32px; color: #14281d; margin-bottom: 8px; }
+    .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-top: 24px; }
+    .menu-item { background: #fff; padding: 20px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; }
+    .menu-item h3 { margin: 8px 0; color: #111827; }
+    .menu-item p { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; }
+    .price { font-size: 18px; font-weight: 800; color: #14281d; }
+    .add-btn { background: #14281d; color: #fff; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold; }
+    .add-btn:hover { background: #dc2626; }
+    .booking-box { background: #fff; padding: 30px; border-radius: 18px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-top: 20px; }
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 16px; }
+    input, select { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; }
+    footer { background: #14281d; color: #d1d5db; text-align: center; padding: 30px; margin-top: 60px; }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    🎁 <span>Special Offer:</span> Free Bobbatlu sweet on all orders above ₹500 across all branches!
+  </div>
+
+  <nav>
+    <div class="logo">🌶️ Andhra Food Hub <small>AUTHENTIC RECIPES</small></div>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#branches">Branches</a></li>
+      <li><a href="#reserve">Book a Table</a></li>
+    </ul>
+    <button class="cart-btn" onclick="viewCart()">🛒 Cart (<span id="cart-count">0</span>) - ₹<span id="cart-total">0</span></button>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <div class="badge">🌾 Desi Ghee & Fresh Gongura</div>
+      <h1>Real Andhra flavour, straight to your table.</h1>
+      <p>We serve authentic gongura pickle, pappu, pure ghee, and fiery traditional curries cooked to perfection.</p>
+      <a href="#menu"><button class="btn-primary">Browse Menu & Order →</button></a>
+      <a href="#reserve"><button class="btn-outline">Reserve a Table</button></a>
+    </div>
+
+    <div class="special-card">
+      <h3>Today's Special Spread</h3>
+      <div class="dish-mini"><strong>🌿 Andhra Veg Meals (₹180)</strong><br><small>Rice, pappu, gongura pachadi, rasam & ghee</small></div>
+      <div class="dish-mini"><strong>🍗 Gongura Mutton (₹360)</strong><br><small>Slow-cooked mutton with tangy gongura leaves</small></div>
+      <div class="dish-mini"><strong>🍯 Pootharekulu & Bobbatlu (₹120)</strong><br><small>Authentic paper-thin rice sweet with ghee</small></div>
+    </div>
+  </section>
+
+  <section class="section" id="menu">
+    <h2>Kitchen Menu</h2>
+    <p>Prepared daily with pure desi ghee and original spice blends.</p>
+    <div class="menu-grid" id="menu-list"></div>
+  </section>
+
+  <section class="section" id="branches">
+    <h2>Our Branches</h2>
+    <p>Serving Vijayawada • Guntur • Eluru • Hyderabad</p>
+  </section>
+
+  <section class="section" id="reserve">
+    <h2>Book a Table</h2>
+    <div class="booking-box">
+      <form onsubmit="bookTable(event)">
+        <div class="form-grid">
+          <input type="text" id="cust-name" placeholder="Full Name" required />
+          <input type="tel" id="cust-phone" placeholder="10-Digit Mobile Number" required />
+          <select id="branch">
+            <option>Vijayawada (MG Road)</option>
+            <option>Guntur (Brodipet)</option>
+            <option>Eluru (Powerpet)</option>
+            <option>Hyderabad (Jubilee Hills)</option>
+          </select>
+          <input type="date" id="cust-date" required />
+        </div>
+        <button type="submit" class="btn-primary">Request Table Reservation</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Andhra Food Hub. Connected to MongoDB.</p>
+  </footer>
+
+  <script>
+    const dishes = [
+      { name: "Andhra Veg Meals", desc: "Rice, pappu, gongura pachadi, curries, sambar, curd & ghee", price: 180 },
+      { name: "Chicken Meals", desc: "Full meals with Andhra chicken fry and spicy gravy", price: 240 },
+      { name: "Gongura Mutton", desc: "Slow-cooked mutton with sour gongura leaves", price: 360 },
+      { name: "Gutti Vankaya Curry", desc: "Stuffed brinjal in peanut and sesame masala", price: 150 },
+      { name: "Natu Kodi Pulusu", desc: "Country chicken stewed in tamarind gravy", price: 320 },
+      { name: "Chicken Dum Biryani", desc: "Basmati cooked on dum, served with raita & salan", price: 260 },
+      { name: "Pesarattu Upma", desc: "Green gram dosa filled with upma & ginger chutney", price: 90 },
+      { name: "Pootharekulu", desc: "Paper-thin rice sheets layered with ghee and sugar", price: 120 }
+    ];
+
+    let cartCount = 0;
+    let cartTotal = 0;
+
+    const menuList = document.getElementById("menu-list");
+    dishes.forEach(item => {
+      menuList.innerHTML += `
+        <div class="menu-item">
+          <div>
+            <h3>${item.name}</h3>
+            <p>${item.desc}</p>
+          </div>
+          <div class="price-row">
+            <span class="price">₹${item.price}</span>
+            <button class="add-btn" onclick="addToCart('${item.name}', ${item.price})">+ ADD</button>
+          </div>
+        </div>
+      `;
+    });
+
+    function addToCart(name, price) {
+      cartCount++;
+      cartTotal += price;
+      document.getElementById("cart-count").innerText = cartCount;
+      document.getElementById("cart-total").innerText = cartTotal;
+      if (cartTotal >= 500) {
+        alert(name + " added! 🎉 You unlocked a FREE Bobbatlu sweet!");
+      }
+    }
+
+    function viewCart() {
+      alert("Items in Cart: " + cartCount + "\nTotal Amount: ₹" + cartTotal + (cartTotal >= 500 ? "\n🎁 Free Bobbatlu Included!" : ""));
+    }
+
+    async function bookTable(e) {
+      e.preventDefault();
+      const bookingData = {
+        name: document.getElementById("cust-name").value,
+        phone: document.getElementById("cust-phone").value,
+        branch: document.getElementById("branch").value,
+        date: document.getElementById("cust-date").value
+      };
+
+      const response = await fetch('/api/book', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(bookingData)
+      });
+
+      const result = await response.json();
+      alert(result.message);
+    }
+  </script>
+</body>
+</html>
+2. Paste the Server Code (server.js)
+Click on server.js in VS Code, paste this code, and press Ctrl + S to save:
+
+
+
+
+
+
+
+
+
+
+
+JavaScript::
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use(express.static(__dirname));
+
+// Connect to Local MongoDB Database
+mongoose.connect('mongodb://127.0.0.1:27017/andhrafoodhub')
+  .then(() => console.log('✅ Connected to MongoDB successfully!'))
+  .catch(err => console.error('❌ MongoDB connection error:', err));
+
+// Booking Schema & Model
+const BookingSchema = new mongoose.Schema({
+  name: String,
+  phone: String,
+  branch: String,
+  date: String
+});
+const Booking = mongoose.model('Booking', BookingSchema);
+
+// API Endpoint to save table reservations into MongoDB
+app.post('/api/book', async (req, res) => {
+  try {
+    const newBooking = new Booking(req.body);
+    await newBooking.save();
+    res.json({ message: '🎉 Table reservation saved successfully to MongoDB!' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to save booking' });
+  }
+});
+
+// Start Server on Port 3000
+app.listen(3000, () => {
+  console.log('🚀 Server running at http://localhost:3000');
+});
+Step 3: Run the Server & Website
+Open the internal terminal in VS Code (Ctrl + ~).
+
+Run your Node backend server:
+
+Bash
+-------
+node server.js
+You should see:
+
+Plaintext
+🚀 Server running at http://localhost:3000
+✅ Connected to MongoDB successfully!
+--------------------------------------------------------------------------------------------
+Step 4: Open in Your Browser
+Open Google Chrome.
+
+Type in the address bar:
+
+Plaintext
+http://localhost:3000
